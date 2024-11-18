@@ -1,0 +1,25 @@
+all:
+  hosts:
+    web1:
+      ansible_host: 172.31.19.150
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ansible_practice.pem
+    web2:
+      ansible_host: 172.31.17.2
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ansible_practice.pem
+    db:
+      ansible_host: 172.31.17.85
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ansible_practice.pem
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+webservers:
+  hosts:
+    web1:
+    web2:
+
+dbserver:
+  hosts:
+    db:

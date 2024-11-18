@@ -1,0 +1,36 @@
+---
+- name: Set Up MariaDB Server
+  hosts: dbserver
+  become: yes
+
+  tasks:
+    - name: Install MariaDB Server
+      apt:
+        name: mariadb-server
+        state: present
+        update_cache: yes
+
+    - name: Start and Enable MariaDB Service
+      service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Install Python MySQL Library
+      apt:
+        name: python3-pymysql
+        state: present
+
+    - name: Create a Database and User
+      community.mysql.mysql_db:
+        name: myapp_db
+        state: present
+        login_unix_socket: /run/mysqld/mysqld.sock
+
+    - name: Create Application User
+      community.mysql.mysql_user:
+        name: myapp_user
+        password: myapp_password
+        priv: "myapp_db.*:ALL"
+        state: present
+        login_unix_socket: /run/mysqld/mysqld.sock

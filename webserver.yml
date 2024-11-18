@@ -1,0 +1,23 @@
+---
+- name: Setup Web Servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      notify:
+        - Start Nginx
+
+    - name: Create an index.html file
+      copy:
+        content: "<h1>Welcome to your Ansible managed web server!</h1>"
+        dest: /var/www/html/index.html
+
+  handlers:
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
